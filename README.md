@@ -4,7 +4,7 @@
 ## Deskripsi
 Project ini merupakan implementasi ETL Pipeline
 menggunakan dataset transaksi bank berformat CSV,
-Python, Pandas, dan MySQL.
+Python, Pandas,dan MySQL. 
 
 ## Dataset
 Nama: Bank Transaction Dataset for Fraud Detection
