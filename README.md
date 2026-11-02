@@ -1,4 +1,3 @@
-
 # ETL/ELT Pipeline Transaksi Bank
 
 ## Deskripsi
@@ -67,10 +66,11 @@ SCD Type 2 diterapkan pada dim_account.
 
 pip install -r requirements.txt
 
-4. Jalankan ETL:
-
+4. Menjalankan versi ETL (Pandas-centric)
 python etl.py
 
-5. Jalankan benchmark:
+5. Menjalankan versi ELT (In-Database Transformation)
+python elt.py
 
+6. Menjalankan Benchmark OLAP
 python benchmark.py
