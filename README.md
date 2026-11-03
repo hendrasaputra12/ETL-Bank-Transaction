@@ -21,10 +21,25 @@ Jumlah data: 2.512 transaksi.
 - VS Code
 - Matplotlib
 
-## Proses ETL
-1. Extract: Membaca dataset CSV.
-2. Transform: Membersihkan data.
-3. Load: Memasukkan data ke MySQL.
+## Proses ETL & ELT
+
+### 1. Pendekatan ETL (`etl.py`)
+1. Extract: Membaca dataset CSV mentah.
+2. Transform: Membersihkan data dan mengolah SCD Type 2 di memori Python (Pandas).
+3. Load: Memasukkan data bersih ke MySQL.
+
+### 2. Pendekatan ELT (`elt.py`)
+1. Extract & Load: Membaca CSV mentah dan langsung memuatnya utuh ke tabel staging (`stg_bank`).
+2. Transform: Pembersihan data, SCD Type 2, serta pembentukan tabel dimensi/fakta dilakukan langsung di dalam database MySQL (*In-Database SQL*).
+
+### Perbandingan ETL vs ELT
+
+| Fitur / Parameter | ETL (`etl.py`) | ELT (`elt.py`) |
+| :--- | :--- | :--- |
+| **Lokasi Transformasi** | Memori Python (Pandas) | Database Engine (MySQL) |
+| **Karakteristik Load** | Data dibersihkan dulu, baru di-insert ke DB | Data mentah dimuat ke `stg_bank` dulu |
+| **Keunggulan Utama** | Fleksibilitas data manipulation di Python | Memanfaatkan efisiensi indeks & query engine DB |
+| **Penggunaan Resource** | Memakan memori RAM pada Application Server | Memakan beban komputasi pada Database Server |
 
 ## Star Schema
 Tabel fakta:
@@ -52,12 +67,12 @@ SCD Type 2 diterapkan pada dim_account.
 
 ## Hasil Benchmark
 
-| Metode | Waktu (detik) | Peningkatan |
+| Metode | Waktu (detik) | Peningkatan (%) |
 |---|---:|---:|
-| Full Table Scan | 0.006015 | 0% |
-| Indexing | 0.005614 | 6.67% |
-| Partitioning | 0.006124 | -1.80% |
-| Daily Summary | 0.002022 | 66.38% |
+| Full Table Scan | 0.005492 | 0.00% |
+| Indexing | 0.006043 | -10.04% |
+| Partitioning | 0.005371 | 2.19% |
+| Daily Summary | 0.002009 | **63.41%** |
 
 ## Cara Menjalankan
 1. Jalankan MySQL XAMPP.
